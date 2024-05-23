@@ -1,0 +1,58 @@
+:root{
+  --primary-color: #2f3344;
+  --white: #e9e9e9;
+  --black: #1a1a1a;
+  --red: #ff3a3a;
+}
+
+html{
+  font-size: 62.5%;
+}
+
+body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6rem;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background-color: var(--primary-color);
+  height: 100vh;
+}
+
+.main-container fieldset{
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+  color: var(--white);
+  border: 2px dashed var(--white);
+}
+
+.main-container span{
+  display: block;
+}
+
+.main-container input{
+  border: 2px solid var(--white);
+  font-size: 1.5rem;
+}
+
+.main-container input:focus{
+  outline: none;
+}
+
+.main-container button[type="submit"]{
+  border: 2px dashed var(--white);
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 1rem;
+  font-size: 1.5rem;
+  transition: .2s;
+}
+
+.main-container button[type="submit"]:hover,
+.main-container button[type="submit"]:active{
+  background-color: var(--white);
+  border: 2px solid white;
+  color: var(--black);
+}
