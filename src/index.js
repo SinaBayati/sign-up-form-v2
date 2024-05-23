@@ -24,7 +24,9 @@ function validatePassword(passwordEl){
 }
 
 function validateZipCode(zipCodeEl){
-  if (zipCodeEl.value.length === 10){
+  const zipCodeRegex = /^\d{10}$/;
+
+  if (zipCodeRegex.test(zipCodeEl.value)){
     return true;
   }
 }
@@ -84,5 +86,34 @@ function statusInvalidHandler(errorMessage,inputElement){
 const passwordInput = document.querySelector("#password");
 const confirmPasswordInput = document.querySelector("#confirm-password");
 const countryInput = document.querySelector("#country");
+
+function countryInputHandler(event){
+  const target = event.target;
+  console.log("yay");
+
+  if (isEmpty(target)){
+    statusInvalidHandler("This field must not be empty",target);
+  } else {
+    statusValidHandler("Valid",target);
+  }
+}
+
+countryInput.addEventListener("input",countryInputHandler);
+
 const zipCodeInput = document.querySelector("#zip-code");
+
+function zipCodeInputHandler(event){
+  const target = event.target;
+
+  if (isEmpty(target)){
+    statusInvalidHandler("This field must not be empty",target);
+  } else if (!validateZipCode(target)) {
+    statusInvalidHandler("Invalid zip code",target);
+  } else {
+    statusValidHandler("Valid",target);
+  }
+}
+
+zipCodeInput.addEventListener("input",zipCodeInputHandler);
+
 const submitBtn = document.querySelector("button[type='submit']");
