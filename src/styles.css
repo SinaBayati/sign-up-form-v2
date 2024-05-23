@@ -3,6 +3,7 @@
   --white: #e9e9e9;
   --black: #1a1a1a;
   --red: #ff3a3a;
+  --green: #00ff00;
 }
 
 html{
@@ -20,12 +21,18 @@ body{
 }
 
 .main-container fieldset{
+  padding: 3rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  padding: 2rem;
   color: var(--white);
   border: 2px dashed var(--white);
+}
+
+.main-container label{
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
 }
 
 .main-container span{
@@ -55,4 +62,17 @@ body{
   background-color: var(--white);
   border: 2px solid white;
   color: var(--black);
+}
+
+.error{
+  font-size: 1.3rem;
+  color: var(--green);
+}
+
+.error.active{
+  color: var(--red);
+}
+
+input.active{
+  border-color: var(--red);
 }

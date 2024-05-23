@@ -29,7 +29,7 @@ function validateZipCode(zipCodeEl){
   }
 }
 
-function validateEmail(emailEl){
+function isEmailValid(emailEl){
   if (emailEl.validity.typeMismatch) {
     return false;
   }
@@ -37,6 +37,50 @@ function validateEmail(emailEl){
 }
 
 const emailInput = document.querySelector("#email");
+
+function emailInputHandler(event){
+  const target = event.target;
+  let message = "Valid";
+
+  const isValid = (
+    isEmailValid(target) && !isEmpty(target)
+  );
+
+  if (!isEmailValid(target)) {
+    message = "Invalid email address";
+  } else if (isEmpty(target)) {
+    message = "This field must not be empty";
+  }
+
+  if (isValid) {
+    statusValidHandler(message,target);
+  } else {
+    statusInvalidHandler(message,target);
+  }
+}
+
+emailInput.addEventListener("input",emailInputHandler);
+
+function statusValidHandler(message,inputElement){
+  const outputEl = inputElement.nextElementSibling;
+  const labelEl = inputElement.previousElementSibling;
+
+  outputEl.textContent = message;
+  outputEl.classList.remove("active");
+  labelEl.classList.remove("active");
+  inputElement.classList.remove("active");
+}
+
+function statusInvalidHandler(errorMessage,inputElement){
+  const outputEl = inputElement.nextElementSibling;
+  const labelEl = inputElement.previousElementSibling;
+
+  outputEl.textContent = errorMessage;
+  outputEl.classList.add("active");
+  labelEl.classList.add("active");
+  inputElement.classList.add("active");
+}
+
 const passwordInput = document.querySelector("#password");
 const confirmPasswordInput = document.querySelector("#confirm-password");
 const countryInput = document.querySelector("#country");
