@@ -1,6 +1,13 @@
 import "./styles.css";
 
 let isFormValid = false;
+let inputsStatusObject = {
+  email: "invalid",
+  password: "invalid",
+  confirmPassword: "invalid",
+  country: "invalid",
+  zipCode: "invalid",
+};
 
 function isEmpty(element){
   if (element.value.trim() === "") {
@@ -57,8 +64,10 @@ function emailInputHandler(event){
   }
 
   if (isValid) {
+    inputsStatusObject.email = "valid";
     statusValidHandler(message,target);
   } else {
+    inputsStatusObject.email = "invalid";
     statusInvalidHandler(message,target);
   }
 }
@@ -74,7 +83,7 @@ function statusValidHandler(message,inputElement){
   labelEl.classList.remove("active");
   inputElement.classList.remove("active");
   
-  isFormValid = true;
+  isFormValid = validateForm();
 }
 
 function statusInvalidHandler(errorMessage,inputElement){
@@ -89,21 +98,29 @@ function statusInvalidHandler(errorMessage,inputElement){
   isFormValid = false;
 }
 
+function validateForm(){
+  return Object.values(inputsStatusObject).every(value => value === "valid");
+}
+
 const passwordInput = document.querySelector("#password");
 
 function passwordInputHandler(event){
   const target = event.target;
 
   if (!validatePassword(target)){
+    inputsStatusObject.password = "invalid";
     statusInvalidHandler("Password too short",target);
   } else if (isEmpty(target)) {
+    inputsStatusObject.password = "invalid";
     statusInvalidHandler("This field must not be empty",target);
   } else if (
     !isPasswordSame(target,confirmPasswordInput) 
     && (!isEmpty(confirmPasswordInput)) 
   ) {
+    inputsStatusObject.password = "invalid";
     statusInvalidHandler("Passwords do not match",target);
   } else {
+    inputsStatusObject.password = "valid";
     statusValidHandler("Valid",target);
   }
 }
@@ -116,8 +133,10 @@ function confirmPasswordInputHandler(event){
   const target = event.target;
 
   if (!isPasswordSame(target,passwordInput)) {
+    inputsStatusObject.confirmPassword = "invalid";
     statusInvalidHandler("Password do not match",target);
   } else {
+    inputsStatusObject.confirmPassword = "valid";
     statusValidHandler("Valid",target);
   }
 }
@@ -130,8 +149,10 @@ function countryInputHandler(event){
   const target = event.target;
 
   if (isEmpty(target)){
+    inputsStatusObject.country = "invalid";
     statusInvalidHandler("This field must not be empty",target);
   } else {
+    inputsStatusObject.country = "valid";
     statusValidHandler("Valid",target);
   }
 }
@@ -144,20 +165,25 @@ function zipCodeInputHandler(event){
   const target = event.target;
 
   if (isEmpty(target)){
+    inputsStatusObject.zipCode = "invalid";
     statusInvalidHandler("This field must not be empty",target);
   } else if (!validateZipCode(target)) {
+    inputsStatusObject.zipCode = "invalid";
     statusInvalidHandler("Invalid zip code",target);
   } else {
+    inputsStatusObject.zipCode = "valid";
     statusValidHandler("Valid",target);
   }
 }
 
 zipCodeInput.addEventListener("input",zipCodeInputHandler);
 
-const form = document.querySelector("form");
+const formEl = document.querySelector("form");
 
 function formSubmitHandler(event){
-  // TODO: implement form submit Handler
+  if (!isFormValid) {
+    event.preventDefault();
+  }
 }
 
-form.addEventListener("submit",formSubmitHandler);
+formEl.addEventListener("submit",formSubmitHandler);
