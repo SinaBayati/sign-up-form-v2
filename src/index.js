@@ -134,7 +134,7 @@ function confirmPasswordInputHandler(event){
 
   if (!isPasswordSame(target,passwordInput)) {
     inputsStatusObject.confirmPassword = "invalid";
-    statusInvalidHandler("Password do not match",target);
+    statusInvalidHandler("Passwords do not match",target);
   } else {
     inputsStatusObject.confirmPassword = "valid";
     statusValidHandler("Valid",target);
